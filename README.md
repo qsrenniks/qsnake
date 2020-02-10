@@ -1,2 +1,2 @@
-# snake
+# qsnake
 Console based snake game
