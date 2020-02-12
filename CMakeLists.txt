@@ -36,6 +36,7 @@ target_link_libraries(qsnake
   PRIVATE ${PROJECT_SOURCE_DIR}/lib/libraries/glew32.lib
   PRIVATE ${PROJECT_SOURCE_DIR}/lib/libraries/glfw3.lib)
 
+target_compile_definitions(qsnake PRIVATE DATA_DIR="${PROJECT_SOURCE_DIR}/data/")
 
 add_custom_command(TARGET qsnake POST_BUILD 
   COMMAND ${CMAKE_COMMAND} -E copy_if_different

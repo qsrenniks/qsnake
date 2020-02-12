@@ -1,0 +1,8 @@
+{
+  "vert": "PassThroughShader/PassThroughShader.vert",
+  "frag": "PassThroughShader/PassThroughShader.frag",
+  "tesc": "",
+  "tese": "",
+  "geom": "",
+  "comp": ""
+}
