@@ -8,12 +8,26 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+struct GLFWwindow;
+
 class Window
 {
 public:
   void initialize();
   void shutdown();
+
+  bool shouldClose() const;
+
+  void beginFrame();
+  void endFrame();
+
 private:
+  void initializeGLFW();
+  void shutdownGLFW();
+  void initializeGLEW();
+  void initializeOpenGL();
+
+  GLFWwindow* m_window = nullptr;
 };
 
 #endif

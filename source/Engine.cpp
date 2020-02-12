@@ -16,12 +16,24 @@ Engine &Engine::get()
 
 void Engine::initialize()
 {
+  Engine &engine = Engine::get();
+  engine.m_window.initialize();
 }
 
 void Engine::gameLoop()
 {
+  Engine &engine = Engine::get();
+
+  while (!engine.m_window.shouldClose())
+  {
+    engine.m_window.beginFrame();
+
+    engine.m_window.endFrame();
+  }
 }
 
 void Engine::shutdown()
 {
+  Engine &engine = Engine::get();
+  engine.m_window.shutdown();
 }
