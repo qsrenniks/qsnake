@@ -167,3 +167,8 @@ bool Window::shouldClose() const
 {
   return bool(glfwWindowShouldClose(m_window));
 }
+
+double Window::getTime()
+{
+  return glfwGetTime();
+}

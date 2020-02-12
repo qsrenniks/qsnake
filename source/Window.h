@@ -21,6 +21,8 @@ public:
   void beginFrame();
   void endFrame();
 
+  double getTime();
+
 private:
   void initializeGLFW();
   void shutdownGLFW();

@@ -8,6 +8,9 @@
 #include "pch.h"
 #include "Engine.h"
 #include "GraphicsManager.h"
+#include "GameObjectManager.h"
+#include <thread>
+#include <chrono>
 
 Engine &Engine::get()
 {
@@ -27,12 +30,26 @@ void Engine::gameLoop()
   Engine &engine = Engine::get();
   GraphicsManager &graphics = GraphicsManager::get();
 
+  double previousTime = engine.m_window.getTime();
   while (!engine.m_window.shouldClose())
   {
-    engine.m_window.beginFrame();
-    graphics.gatherDrawCommands();
-    graphics.renderDrawCommands();
-    engine.m_window.endFrame();
+    double currentTime = engine.m_window.getTime();
+    double elapsedTime = currentTime - previousTime;
+
+    if (elapsedTime >= engine.m_tickRate)
+    {
+      engine.m_deltaTime = float(currentTime - previousTime);
+
+      engine.m_window.beginFrame();
+      GameObjectManager::get().tick(engine.m_deltaTime);
+      graphics.gatherDrawCommands();
+      graphics.renderDrawCommands();
+      engine.m_window.endFrame();
+    }
+    else
+    {
+      std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(engine.m_tickRate - elapsedTime));
+    }
   }
 }
 

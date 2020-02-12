@@ -24,6 +24,9 @@ private:
 
   Window m_window;
 
+  double m_tickRate = 1.0f / 60.0f;
+  double m_deltaTime = 0.0f;
+
   Engine() = default;
 };
 

@@ -15,6 +15,9 @@ public:
   virtual void tick(float dt) = 0;
   virtual void render() = 0;
   virtual void shutdown() = 0;
+
+  virtual const glm::ivec2& getPosition() const = 0;
+  virtual void setPosition(const glm::ivec2& position) = 0;
 };
 
 #endif
