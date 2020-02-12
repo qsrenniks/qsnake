@@ -11,6 +11,7 @@
 class IGameModeController
 {
 public:
+  virtual ~IGameModeController() = default;
   virtual void initialize() = 0;
   virtual void render() = 0;
   virtual void tick(float dt) = 0;

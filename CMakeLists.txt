@@ -17,13 +17,23 @@ addunit(GraphicsManager.cpp)
 addunit(GameObjectManager.cpp)
 addunit(Level.h)
 addunit(Level.cpp)
+addunit(qGL.cpp)
+addunit(Object.cpp)
+addunit(Shader.cpp)
+addunit(Camera.cpp)
+addunit(Texture.cpp)
 
 #game files
 addunit(game/SnakeGameMode.cpp)
+addunit(game/SnakeLevel.cpp)
+addunit(game/Fruit.cpp)
 
 add_executable(qsnake ${SOURCE})
 
 target_precompile_headers(qsnake PRIVATE "source/pch.h")
+
+target_compile_options(qsnake 
+  PRIVATE /std:c++17)
 
 target_include_directories(qsnake 
   PRIVATE lib/includes/

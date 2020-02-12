@@ -8,10 +8,12 @@
 #ifndef SNAKELEVEL_H
 #define SNAKELEVEL_H
 
+#include "Level.h"
+
 class SnakeLevel : public Level
 {
 public:
-  virtual initialize() override;
+  virtual void initialize() override;
 };
 
 #endif

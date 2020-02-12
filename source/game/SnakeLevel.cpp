@@ -9,7 +9,7 @@
 #include "SnakeLevel.h"
 #include "Fruit.h"
 
-SnakeLevel::initialize() 
+void SnakeLevel::initialize() 
 {
   std::shared_ptr<Fruit> fruit = std::make_shared<Fruit>();
   addObject(fruit);

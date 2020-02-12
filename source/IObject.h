@@ -8,16 +8,22 @@
 #ifndef IOBJECT_H
 #define IOBJECT_H
 
+class ILevel;
+
 class IObject
 {
 public:
+  virtual ~IObject() = default;
   virtual void initialize() = 0;
   virtual void tick(float dt) = 0;
   virtual void render() = 0;
   virtual void shutdown() = 0;
 
-  virtual const glm::ivec2& getPosition() const = 0;
-  virtual void setPosition(const glm::ivec2& position) = 0;
+  virtual ILevel* getLevel() const = 0;
+  virtual void setLevel(ILevel* level) = 0;
+
+  virtual const glm::vec3& getPosition() const = 0;
+  virtual void setPosition(const glm::vec3& position) = 0;
 };
 
 #endif

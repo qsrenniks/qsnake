@@ -8,9 +8,10 @@
 #ifndef IDRAWCOMMAND_H
 #define IDRAWCOMMAND_H
 
-class IDrawCommand
+class  IDrawCommand
 {
 public:
+  virtual ~IDrawCommand() = default;
   virtual void bindShader() = 0;
   virtual void bindGeometry() = 0;
   virtual void draw() = 0;

@@ -15,6 +15,7 @@ class IObject;
 class ILevel
 {
 public:
+  virtual ~ILevel() = default;
   virtual void initialize() = 0;
   virtual void render() = 0;
   virtual void tick(float dt) = 0;

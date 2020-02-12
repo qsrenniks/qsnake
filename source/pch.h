@@ -28,4 +28,6 @@
 #include "glm/gtx/matrix_decompose.hpp"
 #include "glm/gtx/compatibility.hpp"
 
+#include "json.hpp"
+
 #endif

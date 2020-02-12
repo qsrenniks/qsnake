@@ -9,10 +9,12 @@
 #include "SnakeGameMode.h"
 #include "Level.h"
 #include "GameObjectManager.h"
+#include "SnakeLevel.h"
 
 void SnakeGameMode::initialize()
 {
-  m_testLevel = std::make_shared<Level>();
+  m_testLevel = std::make_shared<SnakeLevel>();
+  // GameObjectManager::get().setLevel(std::dynamic_pointer_cast<ILevel>(m_testLevel));
   GameObjectManager::get().setLevel(m_testLevel);
 }
 
@@ -26,4 +28,5 @@ void SnakeGameMode::tick(float dt)
 
 void SnakeGameMode::shutdown()
 {
+  
 }

@@ -8,6 +8,10 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include "IObject.h"
+
+class ILevel;
+
 class Object : public IObject
 {
 public:
@@ -16,11 +20,15 @@ public:
   virtual void render() override;
   virtual void shutdown() override;
 
-  virtual const glm::ivec2 &getPosition() const override { return m_position; };
-  virtual void setPosition(const glm::ivec2 &position) override { m_position = position; };
+  virtual ILevel *getLevel() const override { return m_parentLevel; };
+  virtual void setLevel(ILevel *level) override { m_parentLevel = level; };
+
+  virtual const glm::vec3 &getPosition() const override { return m_position; };
+  virtual void setPosition(const glm::vec3 &position) override { m_position = position; };
 
 private:
-  glm::ivec2 m_position;
+  glm::vec3 m_position = glm::vec3(0.0f);
+  ILevel *m_parentLevel = nullptr;
 };
 
 #endif

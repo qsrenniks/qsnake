@@ -11,6 +11,8 @@
 #include "ILevel.h"
 #include <vector>
 
+class IObject;
+
 class Level : public ILevel
 {
 public:

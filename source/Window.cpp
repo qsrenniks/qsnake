@@ -8,6 +8,7 @@
 #include "pch.h"
 #include "Window.h"
 #include <iostream>
+#include "GraphicsManager.h"
 
 void errorCallback(int error, char const *description)
 {
@@ -15,6 +16,7 @@ void errorCallback(int error, char const *description)
 
 void frameBufferSizeCallback(GLFWwindow *pwin, int width, int height)
 {
+  GraphicsManager::onWindowSizeChange(width, height);
   // GraphicsManager::get().onWindowSizeChange(width, height);
   glViewport(0, 0, width, height);
 }
@@ -105,6 +107,8 @@ void Window::initializeGLFW()
     glfwTerminate();
     std::exit(EXIT_FAILURE);
   }
+
+  frameBufferSizeCallback(m_window, 800, 600);
 
   glfwSetFramebufferSizeCallback(m_window, frameBufferSizeCallback);
   glfwSetKeyCallback(m_window, keyCallback);

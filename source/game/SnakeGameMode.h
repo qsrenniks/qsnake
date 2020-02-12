@@ -11,7 +11,7 @@
 #include "IGameModeController.h"
 #include <memory>
 
-class Level;
+class SnakeLevel;
 
 class SnakeGameMode : public IGameModeController
 {
@@ -21,7 +21,7 @@ public:
   virtual void tick(float dt);
   virtual void shutdown();
 private:
-  std::shared_ptr<Level> m_testLevel = nullptr;
+  std::shared_ptr<SnakeLevel> m_testLevel = nullptr;
 };
 
 #endif
