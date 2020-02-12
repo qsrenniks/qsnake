@@ -1,2 +1,2 @@
 # qsnake
-Console based snake game
+snake game for windows
