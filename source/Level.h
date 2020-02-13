@@ -22,6 +22,8 @@ public:
   virtual void shutdown() override;
 
   virtual void addObject(const std::shared_ptr<IObject> &object) override;
+  virtual void onKeyPress(int key, int action) override;
+  virtual void inspect(PropertyInspector& inspector) override;
 
 private:
   std::vector<std::shared_ptr<IObject>> m_objectList;

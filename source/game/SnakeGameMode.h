@@ -20,6 +20,8 @@ public:
   virtual void render();
   virtual void tick(float dt);
   virtual void shutdown();
+  virtual void onKeyPress(int key, int action); 
+
 private:
   std::shared_ptr<SnakeLevel> m_testLevel = nullptr;
 };

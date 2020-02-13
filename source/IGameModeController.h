@@ -16,6 +16,7 @@ public:
   virtual void render() = 0;
   virtual void tick(float dt) = 0;
   virtual void shutdown() = 0;
+  virtual void onKeyPress(int key, int action) = 0;
 };
 
 #endif

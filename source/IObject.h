@@ -24,6 +24,8 @@ public:
 
   virtual const glm::vec3& getPosition() const = 0;
   virtual void setPosition(const glm::vec3& position) = 0;
+
+  virtual void onKeyPress(int key, int action)= 0;
 };
 
 #endif

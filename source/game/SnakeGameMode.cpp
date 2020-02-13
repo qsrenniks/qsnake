@@ -28,5 +28,9 @@ void SnakeGameMode::tick(float dt)
 
 void SnakeGameMode::shutdown()
 {
-  
+}
+
+void SnakeGameMode::onKeyPress(int key, int action)
+{
+  m_testLevel->onKeyPress(key, action);
 }

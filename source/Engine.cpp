@@ -39,6 +39,7 @@ void Engine::gameLoop()
     if (elapsedTime >= engine.m_tickRate)
     {
       engine.m_deltaTime = float(currentTime - previousTime);
+      previousTime = currentTime;
       engine.m_window.beginFrame();
       GameObjectManager::get().tick(engine.m_deltaTime);
       graphics.gatherDrawCommands();

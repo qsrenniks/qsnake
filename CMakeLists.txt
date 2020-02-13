@@ -22,11 +22,25 @@ addunit(Object.cpp)
 addunit(Shader.cpp)
 addunit(Camera.cpp)
 addunit(Texture.cpp)
+addunit(PropertyInspector.cpp)
 
 #game files
 addunit(game/SnakeGameMode.cpp)
 addunit(game/SnakeLevel.cpp)
 addunit(game/Fruit.cpp)
+addunit(game/Grid.cpp)
+addunit(game/SnakeObject.cpp)
+
+#imgui
+set(SOURCE ${SOURCE}
+${PROJECT_SOURCE_DIR}/lib/includes/imgui/imgui.cpp
+${PROJECT_SOURCE_DIR}/lib/includes/imgui/imgui_demo.cpp
+${PROJECT_SOURCE_DIR}/lib/includes/imgui/imgui_draw.cpp
+${PROJECT_SOURCE_DIR}/lib/includes/imgui/imgui_impl_glfw.cpp
+${PROJECT_SOURCE_DIR}/lib/includes/imgui/imgui_impl_opengl3.cpp
+${PROJECT_SOURCE_DIR}/lib/includes/imgui/imgui_stdlib.cpp
+${PROJECT_SOURCE_DIR}/lib/includes/imgui/imgui_widgets.cpp
+)
 
 add_executable(qsnake ${SOURCE})
 

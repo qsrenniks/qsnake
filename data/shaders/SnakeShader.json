@@ -1,0 +1,8 @@
+{
+  "vert": "SnakeShader/SnakeShader.vert",
+  "frag": "SnakeShader/SnakeShader.frag",
+  "tesc": "",
+  "tese": "",
+  "geom": "",
+  "comp": ""
+}

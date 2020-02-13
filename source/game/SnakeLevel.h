@@ -10,10 +10,17 @@
 
 #include "Level.h"
 
+class Grid;
+
 class SnakeLevel : public Level
 {
 public:
   virtual void initialize() override;
+
+  std::shared_ptr<Grid> getGrid() const { return m_grid; };
+
+private:
+  std::shared_ptr<Grid> m_grid = nullptr;
 };
 
 #endif

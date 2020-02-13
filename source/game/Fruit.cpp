@@ -10,6 +10,8 @@
 #include "GraphicsManager.h"
 #include "DrawCommand.h"
 #include "Shader.h"
+#include "SnakeLevel.h"
+#include "Grid.h"
 
 class FruitDrawCommand : public DrawCommand
 {
@@ -18,7 +20,7 @@ public:
   {
     auto shader = m_fruitObject->getShader();
     shader->bind();
-    shader->setUniform("model", glm::mat4(1.0f));
+    shader->setUniform("model", glm::translate(glm::mat4(1.0f), m_fruitObject->getPosition()));
     shader->setUniform("pv", GraphicsManager::getCamera().getProjectionMatrix() * GraphicsManager::getCamera().getViewMatrix());
   };
 
@@ -32,7 +34,7 @@ public:
     GraphicsManager::drawQuad();
   };
 
-  Fruit* m_fruitObject = nullptr;
+  Fruit *m_fruitObject = nullptr;
 };
 
 void Fruit::initialize()
@@ -40,6 +42,10 @@ void Fruit::initialize()
   Object::initialize();
   m_testShader = std::make_shared<Shader>();
   m_testShader->compile("PassThroughShader.json");
+
+  //snap position to grid pos
+  glm::vec3 pos = ((SnakeLevel *)getLevel())->getGrid()->convertWorldPosToGridPos(getPosition());
+  setPosition(pos);
 }
 
 void Fruit::render()

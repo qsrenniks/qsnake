@@ -12,6 +12,7 @@
 
 class IGameModeController;
 class ILevel;
+class PropertyInspector;
 
 class GameObjectManager
 {
@@ -21,8 +22,12 @@ public:
   void render();
   void shutdown();
 
+  void inspectGameObjects(PropertyInspector& inspector);
+
   void setLevel(const std::shared_ptr<ILevel> &level);
   void setGameMode(const std::shared_ptr<IGameModeController> &mode);
+
+  void onKeyPress(int key, int action);
 
   static GameObjectManager& get();
   ~GameObjectManager() = default;

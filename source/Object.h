@@ -26,6 +26,8 @@ public:
   virtual const glm::vec3 &getPosition() const override { return m_position; };
   virtual void setPosition(const glm::vec3 &position) override { m_position = position; };
 
+  virtual void onKeyPress(int key, int action) override;
+
 private:
   glm::vec3 m_position = glm::vec3(0.0f);
   ILevel *m_parentLevel = nullptr;

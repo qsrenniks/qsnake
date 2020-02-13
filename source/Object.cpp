@@ -23,3 +23,8 @@ void Object::render()
 void Object::shutdown()
 {
 }
+
+void Object::onKeyPress(int key, int action)
+{
+  
+}

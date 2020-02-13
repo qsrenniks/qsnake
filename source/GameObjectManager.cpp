@@ -9,6 +9,7 @@
 #include "GameObjectManager.h"
 #include "ILevel.h"
 #include "IGameModeController.h"
+#include "PropertyInspector.h"
 
 GameObjectManager &GameObjectManager::get()
 {
@@ -36,6 +37,27 @@ void GameObjectManager::setGameMode(const std::shared_ptr<IGameModeController> &
 
   m_currentMode = mode;
   m_currentMode->initialize();
+}
+
+void GameObjectManager::onKeyPress(int key, int action)
+{
+  if (m_currentMode)
+  {
+    m_currentMode->onKeyPress(key, action);
+  }
+}
+
+void GameObjectManager::inspectGameObjects(PropertyInspector &inspector)
+{
+  inspector.beginMainMenuBar();
+
+  if(inspector.beginMenu("objects"))
+  {
+    m_currentLevel->inspect(inspector);
+
+    inspector.endMenu();
+  }
+  inspector.endMainMenuBar();
 }
 
 void GameObjectManager::initialize()
@@ -70,5 +92,4 @@ void GameObjectManager::render()
 
 void GameObjectManager::shutdown()
 {
-  
 }

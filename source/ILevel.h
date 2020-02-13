@@ -11,6 +11,7 @@
 #include <memory>
 
 class IObject;
+class PropertyInspector;
 
 class ILevel
 {
@@ -22,6 +23,10 @@ public:
   virtual void shutdown() = 0;
 
   virtual void addObject(const std::shared_ptr<IObject>& object) = 0;
+  virtual void onKeyPress(int key, int action) = 0;
+
+  virtual void inspect(PropertyInspector& inspector) = 0;
+
 };
 
 #endif
