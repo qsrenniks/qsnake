@@ -12,6 +12,7 @@ endmacro()
 addunit(main.cpp)
 
 addunit(Engine.cpp)
+addunit(EngineSettings.cpp)
 addunit(Window.cpp)
 addunit(GraphicsManager.cpp)
 addunit(GameObjectManager.cpp)

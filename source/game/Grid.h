@@ -32,7 +32,7 @@ public:
 
   const glm::vec3 &getBottomLeft() const { return m_gridBottomLeft; };
 
-  const glm::vec3& gridIDToWorldPos(int xID, int yID) const;
+  glm::vec3 gridIDToWorldPos(int xID, int yID) const;
 
 private:
   const unsigned m_gridHeight = 18;

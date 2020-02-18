@@ -10,6 +10,7 @@
 #include "qGL.h"
 #include "GraphicsManager.h"
 #include "Shader.h"
+#include "EngineSettings.h"
 
 void Grid::initialize()
 {
@@ -71,9 +72,12 @@ void Grid::render()
 {
   Object::render();
 
-  std::unique_ptr<GridDrawCommand> drawCommand = std::make_unique<GridDrawCommand>();
-  drawCommand->m_grid = this;
-  GraphicsManager::addDrawCommand(std::move(drawCommand));
+  if (EngineSettings::get().shouldShowGrid())
+  {
+    std::unique_ptr<GridDrawCommand> drawCommand = std::make_unique<GridDrawCommand>();
+    drawCommand->m_grid = this;
+    GraphicsManager::addDrawCommand(std::move(drawCommand));
+  }
 }
 
 glm::vec3 Grid::convertWorldPosToGridPos(const glm::vec3 &worldPos)
@@ -84,7 +88,7 @@ glm::vec3 Grid::convertWorldPosToGridPos(const glm::vec3 &worldPos)
   return glm::vec3(float(x), float(y), 0.0f);
 }
 
-const glm::vec3 &Grid::gridIDToWorldPos(int xID, int yID) const
+glm::vec3 Grid::gridIDToWorldPos(int xID, int yID) const
 {
   glm::vec3 startPos = glm::vec3(getCellWidth() * xID, getCellHeight() * yID, 0.0f);
   startPos -= m_gridBottomLeft;

@@ -15,7 +15,7 @@ class Engine
 public:
   static Engine& get();
 
-  static void initialize();
+  static void initialize(int argc, char** argv);
   static void gameLoop();
   static void shutdown();
 

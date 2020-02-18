@@ -7,10 +7,13 @@
 
 #include "pch.h"
 #include "Engine.h"
+#include "EngineSettings.h"
 #include "GraphicsManager.h"
 #include "GameObjectManager.h"
 #include <thread>
 #include <chrono>
+#include <iostream>
+#include "cxxopts.h"
 
 Engine &Engine::get()
 {
@@ -18,8 +21,21 @@ Engine &Engine::get()
   return engine;
 }
 
-void Engine::initialize()
+static void processCommandLineArgs(int argc, char **argv)
 {
+  cxxopts::Options options("QSnake", "open source snake game");
+
+  options.add_options()("g,grid", "show the grid the snake runs along")("e,editor", "show engine editor");
+
+  auto result = options.parse(argc, argv);
+
+  EngineSettings::get().setShowGrid(result["grid"].as<bool>());
+  EngineSettings::get().setShowEditor(result["editor"].as<bool>());
+}
+
+void Engine::initialize(int argc, char **argv)
+{
+  processCommandLineArgs(argc, argv);
   Engine &engine = Engine::get();
   engine.m_window.initialize();
   GraphicsManager::initialize();
