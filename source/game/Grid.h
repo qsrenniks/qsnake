@@ -27,7 +27,12 @@ public:
   const float &getCellWidth() const { return m_cellWidth; };
   const float &getCellHeight() const { return m_cellHeight; };
 
+  const int &getGridWidth() const { return m_gridWidth; };
+  const int &getGridHeight() const { return m_gridHeight; };
+
   const glm::vec3 &getBottomLeft() const { return m_gridBottomLeft; };
+
+  const glm::vec3& gridIDToWorldPos(int xID, int yID) const;
 
 private:
   const unsigned m_gridHeight = 18;

@@ -21,6 +21,8 @@ public:
 
   const std::shared_ptr<Shader> &getShader() const { return m_testShader; };
 
+  void respawn();
+
 private:
   std::shared_ptr<Shader> m_testShader = nullptr;
 };

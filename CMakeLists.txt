@@ -23,6 +23,7 @@ addunit(Shader.cpp)
 addunit(Camera.cpp)
 addunit(Texture.cpp)
 addunit(PropertyInspector.cpp)
+addunit(Random.cpp)
 
 #game files
 addunit(game/SnakeGameMode.cpp)
@@ -30,6 +31,8 @@ addunit(game/SnakeLevel.cpp)
 addunit(game/Fruit.cpp)
 addunit(game/Grid.cpp)
 addunit(game/SnakeObject.cpp)
+addunit(game/SnakeTail.cpp)
+addunit(game/SnakeDrawCommand.cpp)
 
 #imgui
 set(SOURCE ${SOURCE}

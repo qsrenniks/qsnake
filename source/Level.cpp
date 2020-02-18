@@ -26,9 +26,10 @@ void Level::render()
 
 void Level::tick(float dt)
 {
-  std::for_each(m_objectList.begin(), m_objectList.end(), [=](std::shared_ptr<IObject> &object) {
-    object->tick(dt);
-  });
+  for(unsigned i = 0; i < unsigned(m_objectList.size()); ++i)
+  {
+    m_objectList[i]->tick(dt);
+  }
 }
 
 void Level::shutdown()

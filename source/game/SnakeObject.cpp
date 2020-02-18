@@ -11,10 +11,12 @@
 #include "Grid.h"
 #include "GraphicsManager.h"
 #include "Shader.h"
+#include "Fruit.h"
+#include "SnakeDrawCommand.h"
+#include "SnakeTail.h"
 
 void SnakeObject::tick(float dt)
 {
-  std::cout << dt << std::endl;
   m_moveTimer += dt;
   if (m_moveTimer <= m_moveIncrementDuration)
   {
@@ -46,7 +48,65 @@ void SnakeObject::tick(float dt)
     break;
   }
 
+  moveChildren();
   setPosition(currentPos);
+
+  if(didHitFruit())
+  {
+    addChild();
+  }
+
+}
+
+void SnakeObject::moveChildren()
+{
+  glm::vec3 nextPos = glm::vec3(getPosition().x, getPosition().y, 0.5f);
+  SnakeTail* node = m_head;
+  while(node)
+  {
+    glm::vec3 temp = node->getPosition();
+    node->setPosition(nextPos);
+    nextPos = temp;
+    node = node->getNext();
+  }
+}
+
+void SnakeObject::addChild()
+{
+  std::shared_ptr<SnakeTail> newTail = std::make_shared<SnakeTail>();
+
+  if(m_tail)
+  {
+    m_tail->setNext(newTail.get());
+  }
+  else
+  {
+    m_head = newTail.get();
+  }
+
+  getLevel()->addObject(newTail);
+  m_tail = newTail.get();
+  m_tail->setPosition(glm::vec3(getPosition().x, getPosition().y, 0.5f));
+  m_tail->setHead(this);
+}
+
+bool SnakeObject::didHitFruit() const
+{
+  bool didHit = false;
+
+  auto level = ((SnakeLevel *)getLevel());
+
+  for (const auto &fruit : m_fruitObjects)
+  {
+    if (level->getGrid()->convertWorldPosToGridPos(fruit->getPosition()) == level->getGrid()->convertWorldPosToGridPos(getPosition()))
+    {
+      didHit = true;
+      fruit->respawn();
+      break;
+    }
+  }
+
+  return didHit;
 }
 
 void SnakeObject::onKeyPress(int key, int action)
@@ -56,49 +116,24 @@ void SnakeObject::onKeyPress(int key, int action)
     return;
   }
 
-  if (key == GLFW_KEY_W)
+  if (key == GLFW_KEY_W && m_currentMoveDirection != MovementDirection::South)
   {
     m_currentMoveDirection = MovementDirection::North;
   }
-  else if (key == GLFW_KEY_S)
+  else if (key == GLFW_KEY_S && m_currentMoveDirection != MovementDirection::North)
   {
     m_currentMoveDirection = MovementDirection::South;
   }
 
-  if (key == GLFW_KEY_D)
+  if (key == GLFW_KEY_D && m_currentMoveDirection != MovementDirection::West)
   {
     m_currentMoveDirection = MovementDirection::East;
   }
-  else if (key == GLFW_KEY_A)
+  else if (key == GLFW_KEY_A && m_currentMoveDirection != MovementDirection::East)
   {
     m_currentMoveDirection = MovementDirection::West;
   }
 }
-
-class SnakeDrawCommand : public IDrawCommand
-{
-public:
-  virtual void bindShader() override
-  {
-    auto shader = m_snake->getShader();
-    shader->bind();
-    shader->setUniform("model", glm::translate(glm::mat4(1.0f), m_snake->getPosition()) * glm::scale(glm::mat4(1.0f), glm::vec3(0.2f)));
-    shader->setUniform("pv", GraphicsManager::getCamera().getProjectionMatrix() * GraphicsManager::getCamera().getViewMatrix());
-    shader->setUniform("color", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-  }
-
-  virtual void bindGeometry() override
-  {
-    GraphicsManager::bindQuad();
-  }
-
-  virtual void draw() override
-  {
-    GraphicsManager::drawQuad();
-  }
-
-  SnakeObject *m_snake = nullptr;
-};
 
 void SnakeObject::initialize()
 {
@@ -106,13 +141,14 @@ void SnakeObject::initialize()
   m_snakeShader = std::make_shared<Shader>();
   m_snakeShader->compile("SnakeShader.json");
 
-  float cellHeight = ((SnakeLevel *)getLevel())->getGrid()->getCellHeight();
-  float cellWidth = ((SnakeLevel *)getLevel())->getGrid()->getCellWidth();
-  glm::vec3 bottomLeft = ((SnakeLevel *)getLevel())->getGrid()->getBottomLeft();
-  bottomLeft -= glm::vec3(cellHeight, cellWidth, 0.0f) * glm::vec3(3.0f, 3.0f, 0.0f);
-  // bottomLeft = ((SnakeLevel *)getLevel())->getGrid()->convertWorldPosToGridPos(bottomLeft);
+  int startX = 1;
+  int startY = 1;
 
-  setPosition(glm::vec3(glm::vec2(bottomLeft), 1.0f));
+  auto level = ((SnakeLevel *)getLevel());
+
+  setPosition(glm::vec3(glm::vec2(level->getGrid()->gridIDToWorldPos(startX, startY)), 1.0f));
+
+  level->getObjects<Fruit>(m_fruitObjects);
 }
 
 void SnakeObject::render()
@@ -120,5 +156,7 @@ void SnakeObject::render()
   Object::render();
   std::unique_ptr<SnakeDrawCommand> command = std::make_unique<SnakeDrawCommand>();
   command->m_snake = this;
+  command->m_position = getPosition();
+  command->m_color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
   GraphicsManager::addDrawCommand(std::move(command));
 }

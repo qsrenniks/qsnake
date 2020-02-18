@@ -12,6 +12,7 @@
 #include "Shader.h"
 #include "SnakeLevel.h"
 #include "Grid.h"
+#include "Random.h"
 
 class FruitDrawCommand : public DrawCommand
 {
@@ -20,8 +21,9 @@ public:
   {
     auto shader = m_fruitObject->getShader();
     shader->bind();
-    shader->setUniform("model", glm::translate(glm::mat4(1.0f), m_fruitObject->getPosition()));
+    shader->setUniform("model", glm::translate(glm::mat4(1.0f), m_fruitObject->getPosition()) * glm::scale(glm::mat4(1.0f), glm::vec3(0.2f)));
     shader->setUniform("pv", GraphicsManager::getCamera().getProjectionMatrix() * GraphicsManager::getCamera().getViewMatrix());
+
   };
 
   virtual void bindGeometry() override
@@ -55,4 +57,13 @@ void Fruit::render()
   std::unique_ptr<FruitDrawCommand> fruitCommand = std::make_unique<FruitDrawCommand>();
   fruitCommand->m_fruitObject = this;
   GraphicsManager::addDrawCommand(std::move(fruitCommand));
+}
+
+void Fruit::respawn()
+{
+  int gridWidth = ((SnakeLevel*)getLevel())->getGrid()->getGridWidth();
+  int gridHeight = ((SnakeLevel*)getLevel())->getGrid()->getGridHeight();
+  int randomPosX = Random::generateRandomInt(1, gridWidth - 1);
+  int randomPosY = Random::generateRandomInt(1, gridHeight - 1);
+  setPosition(((SnakeLevel*)getLevel())->getGrid()->gridIDToWorldPos(randomPosX, randomPosY));
 }

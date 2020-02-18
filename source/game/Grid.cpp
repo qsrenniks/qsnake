@@ -76,12 +76,17 @@ void Grid::render()
   GraphicsManager::addDrawCommand(std::move(drawCommand));
 }
 
-glm::vec3 Grid::convertWorldPosToGridPos(const glm::vec3& worldPos)
+glm::vec3 Grid::convertWorldPosToGridPos(const glm::vec3 &worldPos)
 {
   int x = int(glm::round(worldPos.x / m_cellWidth));
   int y = int(glm::round(worldPos.y / m_cellHeight));
 
-  float gridHalfWidth = m_cellWidth / 2.0f;
-  float gridHalfHeight = m_cellHeight / 2.0f;
-  return glm::vec3(float(x) + gridHalfWidth, float(y) + gridHalfHeight, 0.0f);
+  return glm::vec3(float(x), float(y), 0.0f);
+}
+
+const glm::vec3 &Grid::gridIDToWorldPos(int xID, int yID) const
+{
+  glm::vec3 startPos = glm::vec3(getCellWidth() * xID, getCellHeight() * yID, 0.0f);
+  startPos -= m_gridBottomLeft;
+  return startPos;
 }

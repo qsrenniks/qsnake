@@ -25,6 +25,17 @@ public:
   virtual void onKeyPress(int key, int action) override;
   virtual void inspect(PropertyInspector& inspector) override;
 
+  template<typename tObject>
+  void getObjects(std::vector<std::shared_ptr<tObject>>& objects)
+  {
+    std::for_each(m_objectList.begin(), m_objectList.end(), [&](const std::shared_ptr<IObject>& object){
+      if(auto check = std::dynamic_pointer_cast<tObject>(object))
+      {
+        objects.push_back(check);
+      }
+    });
+  }
+
 private:
   std::vector<std::shared_ptr<IObject>> m_objectList;
 };
